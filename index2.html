@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <style>
+      .booklabel {
+      padding-left: 30px;
+      padding-right:30px;
+    }
+
+    .tremark {
+      vertical-align: middle;
+      background-color: #fdd99b;
+    }
+
+li { margin-top: 4px; margin-button: 4px; }
+
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+    </style>    
+
+    <base target="_top">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+  <script>
+
+function chkbox_liststr(tmpobj, room_para, tdate_str, userid, admin) {
+  var output = "";
+  var cnt = 1;
+  var hiddenstr = "(hidden remark)";
+  for (var c in tmpobj) {
+
+                var q = tmpobj[c];                
+                key = room_para + cnt;
+                cnt=cnt+1; 
+                var remarkcontent = '';
+                if (q[3] == '')
+                  remarkcontent = '';
+                else if (q[3] == hiddenstr) {
+                  remarkcontent = '<label class="booklabel">'  + q[3] + '</label>';
+                }
+                else { 
+                  remarkcontent = '<textarea class="tremark"  rows="4" cols="30" readonly>'  + q[3] + '</textarea>';
+                
+                }    
+                if ((userid == (q[2])) || (admin.length > 0)) {
+                  output += '<li><input type="checkbox" name="cancelchk" id="' + key + '" value="' + tdate_str+ ',' + q[0]+ ',' + q[1]+ ','+q[2] + '"/>' +
+                            '<label for="' + key + '">' + q[1] + '</label><label class="booklabel">' + q[2] + '</label>' + remarkcontent + '</li>';
+
+                }    
+                else {
+                  output += '<li>' + '<label for="' + key + '">' + q[1] + '</label><label class="booklabel">' + q[2] + '</label>' + remarkcontent + '</li>';
+
+                }        
+//                output += '<li><input type="checkbox" name="cancelchk" id="' + key + '" value="' + tdate_str+ ',' + q[0]+ ',' + q[1]+ ','+q[2] + '"/>' +
+//                          '<label for="' + key + '">' + q[1] + '</label><label class="booklabel">' + q[2] + '</label>' + remarkcontent + '</li>';
+
+                  }
+
+   
+   
+
+
+  return output ;
+}
+
+$(document).ready(function(){
+
+$("#querybooking").click(function(){   
+
+var t0018_server_create_datasheet = "https://script.google.com/macros/s/AKfycbw7ZelHl9uwIggm1LJ6TmnxkCFUNQfADcjXqQXYQgdPpJ3EZh9KkLbVNSHfc5xYkZor/exec"
+// imp1
+$.ajax({
+    url: t0018_server_create_datasheet,
+
+    data: {
+        "tmpdate": $('#tmpdate').val(),
+        "userid":$('#userid').val(),
+        "userpw":$('#userpw').val(),
+        //"mdate": "2021-03-02" ,
+    },
+    success: function(response) {
+
+    $('#r11m_list').empty(); 
+    try {
+        var display_msg_status = false;      
+        var obj = JSON.parse(response);  //[["11m","02:00pm-03:00pm","rudy","0200  meeting room half hour"],["11m","03:30pm-04:00pm","mary","mary job"]]
+        var cnt = 1;
+        var tmp_chkbox_content = "";
+        var tmp_date_str = "";
+        var userid = "";
+        var admin = "";
+       
+        for (var b in obj) {   //test     //["11m","02:00pm-03:00pm","rudy","0200  meeting room half hour"]
+          //$('#testspan').text(b);
+          
+
+          if (b=='error') {
+            if (!display_msg_status) {
+            $('#snackbar').text(obj[b]);
+            show_my_msg();
+            display_msg_status = true;
+            }
+          }
+
+          if (b=='userid') {
+            userid = obj[b];
+          }          
+
+          if (b=='admin') {
+            admin = obj[b];
+            $('#admin').text(admin);
+
+          }          
+
+
+          if (b=='date') {
+            $('#testspan').text(obj[b]);
+            tmp_date_str = obj[b];
+          }
+
+          if (b == '11m') {   
+            tmp_chkbox_content = chkbox_liststr(obj[b], '11m', tmp_date_str, userid, admin);
+            $('#r11m_list').html(tmp_chkbox_content);
+          }  
+          else if (b == '11b') {  
+            tmp_chkbox_content = chkbox_liststr(obj[b], '11b', tmp_date_str, userid, admin);
+            $('#r11b_list').html(tmp_chkbox_content);
+          }  
+          else if (b == '25i') {
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25i', tmp_date_str, userid, admin);
+            $('#r25i_list').html(tmp_chkbox_content);
+          }  
+
+          else if (b == '25m') {
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25m', tmp_date_str, userid, admin);
+            $('#r25m_list').html(tmp_chkbox_content);
+          }  
+
+          else if (b == '25c') {  
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25c', tmp_date_str, userid, admin);
+            $('#r25c_list').html(tmp_chkbox_content);
+          }  
+         }
+              
+        if (!display_msg_status) {
+            $('#snackbar').text('攪掂....');
+            show_my_msg();
+            display_msg_status = true;
+        }
+
+
+
+    } catch(e) {
+        alert(e); // error in the above string (in this case, yes)!
+    }
+
+
+    },
+    error: function(){alert("失敗！")}
+  });
+
+
+  });
+
+//--------------------------------
+
+$("#bookcancel").click(function(){   
+
+var t0018_server_cancel = "https://script.google.com/macros/s/AKfycbyUGg0a8Iu7kpOnUjlx74AHHuqB50gUWFuqUBiAh0v8_sk6VhC72j0rdy60OFdZDwS7qQ/exec"
+
+         var array = []; 
+         $("input:checkbox[name=cancelchk]:checked").each(function() { 
+             array.push($(this).val()); 
+         }); 
+         var tmpcancel = array.join('[,]');
+
+
+// imp1
+$.ajax({
+    url: t0018_server_cancel,
+
+    data: {
+
+        //    var array = []; 
+        //    $("input:checkbox[name=cancelchk]:checked").each(function() { 
+        //       array.push($(this).val()); 
+        //    }); 
+            "tmpcancel" : tmpcancel,
+            "userid":$('#userid').val(),
+            "userpw":$('#userpw').val(),
+
+
+       // "tmpdate": $('#tmpdate').val(),
+    },
+    success: function(response) {
+    try {
+        var display_msg_status = false;      
+        var obj = JSON.parse(response);  //[["11m","02:00pm-03:00pm","rudy","0200  meeting room half hour"],["11m","03:30pm-04:00pm","mary","mary job"]]
+
+        var cnt = 1;
+        var tmp_chkbox_content = "";
+        var tmp_date_str = "";
+        var userid = "";
+        var admin = "";
+        for (var b in obj) {   //test     //["11m","02:00pm-03:00pm","rudy","0200  meeting room half hour"]
+
+          if (b=='error') {
+            if (!display_msg_status) {
+            $('#snackbar').text(obj[b]);
+
+            alert(obj[b]);
+
+            }
+          }
+
+          if (b=='date') {
+            $('#testspan').text(obj[b]);
+            tmp_date_str = obj[b];
+          }
+
+          if (b=='admin') {
+            admin = obj[b];
+            $('#admin').text(admin);
+          }          
+
+          if (b=='userid') {
+            userid = obj[b];
+          }          
+
+          if (b == '11m') {   
+            tmp_chkbox_content = chkbox_liststr(obj[b], '11m', tmp_date_str, userid, admin);
+            $('#r11m_list').html(tmp_chkbox_content);
+          }  
+          else if (b == '11b') {  
+            tmp_chkbox_content = chkbox_liststr(obj[b], '11b', tmp_date_str, userid, admin);
+            $('#r11b_list').html(tmp_chkbox_content);
+          }  
+          else if (b == '25i') {
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25i', tmp_date_str, userid, admin);
+            $('#r25i_list').html(tmp_chkbox_content);
+          }  
+
+          else if (b == '25m') {
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25m', tmp_date_str, userid, admin);
+            $('#r25m_list').html(tmp_chkbox_content);
+          }  
+
+          else if (b == '25c') {  
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25c', tmp_date_str, userid, admin);
+            $('#r25c_list').html(tmp_chkbox_content);
+          }  
+         }
+              
+        if (!display_msg_status) {
+            $('#snackbar').text('攪掂....');
+            show_my_msg();
+            display_msg_status = true;
+        }
+
+
+
+    } catch(e) {
+        alert(e); // error in the above string (in this case, yes)!
+    }
+
+
+    },
+    error: function(){alert("失敗！")}
+  });
+
+
+  });
+
+
+
+
+
+//----------------------------------
+
+  $('#applyroom').click(function() {
+  $('#snackbar').text('收到, 請等等..');
+  show_my_msg();
+
+
+  var t0018_server_create_booking = "https://script.google.com/macros/s/AKfycbxe0oFagF-cypfucxqyjBH-53Q4pmp-UZjC5DXdl5IFK6X32zn25tTZmFtpPbt0L4Wf/exec"
+
+  //alert($('#remark_area').val())
+
+$.ajax({
+
+
+
+  url: t0018_server_create_booking,
+
+  data: {
+        "tmproom": $("input[name='room']:checked").val(),
+        "time01" : $('#time01').html(),
+        "time02" : $('#time02').html(),
+        "tmpdate": $('#tmpdate').val(),
+        "remark": $('#remark_area').val(),
+        "userid":$('#userid').val(),
+        "userpw":$('#userpw').val(),
+  },
+    success: function(response) {
+
+    //$('#r11m_list').empty(); 
+    try {
+        var display_msg_status = false;
+        var obj = JSON.parse(response);  //[["11m","02:00pm-03:00pm","rudy","0200  meeting room half hour"],["11m","03:30pm-04:00pm","mary","mary job"]]
+        var cnt = 1;
+        var tmp_chkbox_content = "";
+        var tmp_date_str = "";
+        var userid = "";
+        var admin = "";
+        for (var b in obj) {   //test     //["11m","02:00pm-03:00pm","rudy","0200  meeting room half hour"]
+          
+          if (b=='date') {
+            $('#testspan').text(obj[b]);
+            tmp_date_str = obj[b];
+          }
+
+          if (b=='userid') {
+            userid = obj[b];
+          }          
+
+          if (b=='admin') {
+            admin = obj[b];
+            $('#admin').text(admin);
+
+          }          
+
+          if (b=='error') {
+            if (!display_msg_status) {
+            $('#snackbar').text(obj[b]);
+            show_my_msg();
+            display_msg_status = true;
+            }
+          }
+          
+
+          if (b == '11m') { 
+            $('#r11m_list').empty();   
+            tmp_chkbox_content = chkbox_liststr(obj[b], '11m', tmp_date_str, userid, admin);
+            $('#r11m_list').html(tmp_chkbox_content);
+          }  
+          else if (b == '11b') {  
+            $('#r11b_list').empty();   
+            tmp_chkbox_content = chkbox_liststr(obj[b], '11b', tmp_date_str, userid, admin);
+            $('#r11b_list').html(tmp_chkbox_content);
+          }  
+          else if (b == '25i') {
+            $('#r25i_list').empty();   
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25i', tmp_date_str, userid, admin);
+            $('#r25i_list').html(tmp_chkbox_content);
+          }  
+
+          else if (b == '25m') {
+            $('#r25m_list').empty();   
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25m', tmp_date_str, userid, admin);
+            $('#r25m_list').html(tmp_chkbox_content);
+          }  
+
+          else if (b == '25c') {  
+            $('#r25c_list').empty();   
+            tmp_chkbox_content = chkbox_liststr(obj[b], '25c', tmp_date_str, userid, admin);
+            $('#r25c_list').html(tmp_chkbox_content);
+          }  
+         }
+
+        if (!display_msg_status) {
+            $('#snackbar').text('攪掂....');
+            show_my_msg();
+            display_msg_status = true;
+        }
+
+    } catch(e) {
+        alert(e); // error in the above string (in this case, yes)!
+    }
+
+
+
+    },
+    error: function(){alert("失敗！")}
+  });
+
+
+   });
+
+
+
+
+
+})
+
+
+
+  </script>  
+  
+  </head>
+  <body>
+
+    <div id="11m"></div>
+    
+
+
+    <!--button id='trycheck'> 
+        trycheck 
+    </button>
+    <p id="GFG_DOWN"> 
+    </p-->
+
+<div id="room_title_div" style='background-color:#fcc55c; width:700px;padding:10px; border:1px green solid;'>
+  <b>各個房間預約情況</b>
+</div>
+<div id="show_date_div" style='background-color:#fbd180; width:700px;padding:10px; border:1px green solid;'>
+    <div>Date:<span id="testspan">未有選擇日期</span></div>
+</div>
+<div id="room_div" style='background-color:#fdda96; width:700px;padding:10px; border:1px green solid; margin-bottom: 7px;'>
+  <div>
+      <div>11/F Meeting Room</div>
+      <ul id="r11m_list"></ul>
+      <div>11/F Board Room</div>
+      <ul id="r11b_list"></ul>
+      <div>25/F Interview Room</div>
+      <ul id="r25i_list"></ul>
+      <div>25/F Meeting Room</div>
+      <ul id="r25m_list"></ul>
+      <div>25/F Conference / Training Room</div>
+      <ul id="r25c_list"></ul>
+
+  </div>    
+  <div id="cancel_div">
+    <button id='bookcancel'>取消訂房</button>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" />
+
+
+
+
+
+<div id="date_div" style='background-color:#9b9bfb; width:700px;padding:10px; border:1px green solid; margin-bottom: 7px;'>
+    <label>請選擇日期:</label>
+    <input type='date' id='tmpdate' name='date'>
+    <button id='querybooking'>查詢當天訂房情況</button>    
+</div>
+
+
+
+
+<div id="user_div" style='background-color:#b9c15a; width:700px;padding:10px; border:1px green solid;'>
+  <b>使用者資料</b>
+</div>
+<div id="user_info_div" style='background-color:yellow; width:700px;padding:10px; border:1px green solid;'>
+
+    <span style="width:300px;">UserName:</span> <input type="text" value="" id="userid"><span id="admin" style="width:300px;"></span>   <br><br>
+    Password: <input type="password" value="" id="userpw"><br><br>
+    <input type="checkbox" name="pw_reverse" onclick="pwFunction()">Show Password
+
+</div>
+
+
+
+<div id="room_title_div" style='background-color:#b9c15a; width:700px;padding:10px; border:1px green solid;'>
+  <b>訂房資料輸入</b>
+</div>
+<div id="apply_room_div" style='background-color:yellow; width:700px;padding:10px; border:1px green solid;'>
+<div id="time-range" style="width:300px; margin-left:10px;">
+  <p>Time Range: <span id='time01' class="slider-time">08:00</span> - <span id='time02' class="slider-time">23:00</span></p>
+  <div class="sliders_step1">
+    <div id="slider-range"></div>
+  </div>
+</div>
+
+<div id="showrange">Time Range: 8:00am - 11:00pm</div>
+
+<div style="padding-top:30px;">
+  <form>
+  <input type="radio" id="r11m" name="room" value="r11m">
+  <label for="r11m">11/F Meeting Room</label><br>
+  <input type="radio" id="r11b" name="room" value="r11b">
+  <label for="r11b">11/F Board Room</label><br>
+  <input type="radio" id="r25i" name="room" value="r25i">
+  <label for="r25i">25/F Interview Room</label><br>
+  <input type="radio" id="r25m" name="room" value="r25m">
+  <label for="r25m">25/F Meeting Room</label><br>
+  <input type="radio" id="r25c" name="room" value="r25c">
+  <label for="r25c">25/F Conference / Training Room</label><br>
+  <input type="radio" id="no_booking" name="room" value="nobook">
+  <label for="nobook">無訂房</label><br>
+
+
+ </form>
+</div>  
+
+
+<div style="padding-top:30px;">
+<form>
+<label for="remark_lb">Remark:</label><br>
+<textarea id="remark_area" name="remark_area" rows="4" cols="50"></textarea>
+<br>
+</form>
+</div>  
+
+
+<div style="padding-top:30px;">
+<button id='applyroom'> 
+        申請房間 
+</button>
+</div>
+</div>
+
+
+
+
+
+<script>
+
+function formatAMPM(tmptime) {
+  tmpt_array = tmptime.split(':');
+  if (tmpt_array[0] >= 12)  
+    var ampm = 'pm';
+  else
+    var ampm = 'am';
+
+  if (tmpt_array[0] > 12)  
+    var tmp_hr = +tmpt_array[0]-12;
+  else
+    var tmp_hr = +tmpt_array[0];
+  /*
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+  */
+  output = tmp_hr + ':' + tmpt_array[1] + ampm;
+  return output;
+}
+
+$("#slider-range").slider({
+  range: true,
+  min: 480,
+  max: 1380,
+  step: 30,
+  values: [480, 1380],
+  slide: function(e, ui) {
+    $('.slider-time').each(function(i) {
+      var hours = ("00" + Math.floor(ui.values[i] / 60)).slice(-2);
+      var mins = ("00" + (ui.values[i] - (hours * 60))).slice(-2);
+      $(this).html(hours + ':' + mins);
+
+      //tmpt_array01 =
+      
+      
+
+    //  $('#justtest').html(formatAMPM(02,45));
+      $('#showrange').html('Time Range: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
+
+
+
+    });
+  }
+});
+
+
+function show_my_msg() {
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 6000);
+}
+
+function pwFunction() {
+      var x = document.getElementById("userpw");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+ }
+
+</script>  
+
+
+
+
+
+
+<div id="snackbar">請等等, Server現在處理....</div>
+
+  </body>
+</html>
