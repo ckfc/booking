@@ -370,15 +370,6 @@ $.ajax({
 
 })
 
-function detectmob() {
-   if(window.innerWidth <= 800 || window.innerHeight <= 600) {
-     return true;
-   } else {
-     return false;
-   }
+if (screen.width <= 699) {
+document.location = "mobile.html";
 }
-
-if (detectmob()){
-top.location.href="mobile";
-}
-
