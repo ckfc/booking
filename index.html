@@ -3,158 +3,158 @@
   <head>
 
     <style>
-      .booklabel {
-      padding-left: 30px;
-      padding-right:30px;
-    }
-
-    .tremark {
-      vertical-align: middle;
-      background-color: #fdd99b;
-    }
-
-li { margin-top: 4px; margin-button: 4px; }
-
-#snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 2px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 17px;
-}
-
-#snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;} 
-  to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;} 
-  to {bottom: 0; opacity: 0;}
-}
-
-@keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
-}
     </style>    
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <base target="_top">
+	<link rel="stylesheet" type="text/css" href="mobile.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
   </head>
   <body>
 
-    <div id="11m"></div>
-    
+    <!--div id="11m"></div-->
 
 
-    <!--button id='trycheck'> 
-        trycheck 
-    </button>
-    <p id="GFG_DOWN"> 
-    </p-->
+<div id="user_div" style='background-color:#b9c15a;' class='title_div'>
+  <b>使用者資料</b>
+</div>
+<div id="user_info_div" style='background-color:yellow; margin-bottom:4px;' class='content_div'>
+<div class="inner_div">
+    <span style="width:300px;">UserName:</span> <input type="text" value="" id="userid"><span id="admin" style="width:300px;"></span>   <br><br>
+    Password: <input type="password" value="" id="userpw"><br><br>
+    <input type="checkbox" name="pw_reverse" onclick="pwFunction()">Show Password
+<div style="margin-top: 5px;"><button id='login' >嘗試登入</button></div>	
+</div>
+</div>
 
-<div id="room_title_div" style='background-color:#fcc55c; width:700px;padding:10px; border:1px green solid;'>
+
+
+
+
+
+<div id="date_div" style='background-color:#9b9bfb; margin-bottom: 7px; height:66px;' class='title_div'>
+    <div>
+	<label>請選擇日期:</label>
+    <input type='date' id='tmpdate' name='date'>
+    <button id='querybooking' >查詢當天訂房情況</button>
+	</div>
+	
+</div>
+
+
+
+
+
+
+
+<!--div id="room_full_div" style="display: none;"-->
+<div id="room_full_div">
+
+<div id="room_title_div" style= 'background-color:#fcc55c;' class='title_div'>
   <b>各個房間預約情況</b>
 </div>
-<div id="show_date_div" style='background-color:#fbd180; width:700px;padding:10px; border:1px green solid;'>
+
+
+
+<div id="show_date_div" style='background-color:#fbd180;' class='title_div'>
     <div>Date:<span id="testspan">未有選擇日期</span></div>
 </div>
-<div id="room_div" style='background-color:#fdda96; width:700px;padding:10px; border:1px green solid; margin-bottom: 7px;'>
-  <div>
-      <div>11/F Meeting Room</div>
-      <ul id="r11m_list"></ul>
-      <div>11/F Board Room</div>
-      <ul id="r11b_list"></ul>
-      <div>25/F Interview Room</div>
-      <ul id="r25i_list"></ul>
-      <div>25/F Meeting Room</div>
-      <ul id="r25m_list"></ul>
-      <div>25/F Conference / Training Room</div>
-      <ul id="r25c_list"></ul>
 
+
+<div id="room_div" style='background-color:#fdda96;margin-bottom: 7px;' class='content_div'>
+  <div>
+  <div>
+	  <div style="background-color:#fdbe52; padding:8px 8px 8px 8px;">
+		  <div>11/F Meeting Room</div>
+		  <div id="r11m_div"></div>
+	  </div>	  
+	  <div style="background-color:#fde7c0; padding:8px 8px 8px 8px;">
+		  <div>11/F Board Room</div>
+		  <div id="r11b_div"></div>	  
+	  </div>	  
+	  <div style="background-color:#fdbe52; padding:8px 8px 8px 8px;">  
+		  <div>25/F Interview Room</div>
+		  <div id="r25i_div"></div>	  
+	  </div>	  
+	  <div style="background-color:#fde7c0; padding:8px 8px 8px 8px;">  
+		  <div>25/F Meeting Room</div>
+		  <div id="r25m_div"></div>	  
+	  </div>	  
+	  <div style="background-color:#fdbe52; padding:8px 8px 8px 8px;">    
+		  <div>25/F Conference / Training Room</div>
+		  <div id="r25c_div"></div>  
+	  </div>	  
   </div>    
-  <div id="cancel_div">
+  <div id="cancel_div" class="inner_div">
     <button id='bookcancel'>取消訂房</button>
   </div>
+  </div>
 </div>
+
+</div>
+
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" />
 
 
 
-
-
-<div id="date_div" style='background-color:#9b9bfb; width:700px;padding:10px; border:1px green solid; margin-bottom: 7px;'>
-    <label>請選擇日期:</label>
-    <input type='date' id='tmpdate' name='date'>
-    <button id='querybooking'>查詢當天訂房情況</button>    
+<div id="link_div" style='background-color:#fbd180;margin-bottom: 6px;' class='title_div'>
+    
 </div>
 
 
 
 
-<div id="user_div" style='background-color:#b9c15a; width:700px;padding:10px; border:1px green solid;'>
-  <b>使用者資料</b>
-</div>
-<div id="user_info_div" style='background-color:yellow; width:700px;padding:10px; border:1px green solid;'>
-
-    <span style="width:300px;">UserName:</span> <input type="text" value="" id="userid"><span id="admin" style="width:300px;"></span>   <br><br>
-    Password: <input type="password" value="" id="userpw"><br><br>
-    <input type="checkbox" name="pw_reverse" onclick="pwFunction()">Show Password
-
-</div>
 
 
 
-<div id="room_title_div" style='background-color:#b9c15a; width:700px;padding:10px; border:1px green solid;'>
+
+
+
+
+
+
+<div id="room_title_div" style='background-color:#b9c15a; ' class='title_div'>
   <b>訂房資料輸入</b>
 </div>
-<div id="apply_room_div" style='background-color:yellow; width:700px;padding:10px; border:1px green solid;'>
-<div id="time-range" style="width:300px; margin-left:10px;">
-  <p>Time Range: <span id='time01' class="slider-time">08:00</span> - <span id='time02' class="slider-time">23:00</span></p>
-  <div class="sliders_step1">
-    <div id="slider-range"></div>
-  </div>
-</div>
+<div id="apply_room_div" style='background-color:yellow; ' class='content_div'>
 
-<div id="showrange">Time Range: 8:00am - 11:00pm</div>
+
+
+<div id="time1_container" style="margin: auto; padding-top: 20px; padding-bottom: 20px; width:80%">
+  <input type="range"  id="timevol1" name="timevol1" min="480" max="1380" step="30" value="480" oninput="showtimeVal(this.value)" onchange="showtimeVal(this.value)">
+</div>
+<div id="time01" class="timeblock">08:00</div>
+<!--div id="bgTime">08:00</div-->
+<div id="time2_container" style="margin: auto; padding-top: 20px; padding-bottom: 20px; width:80%">
+  <input type="range"  id="timevol2" name="timevol2" min="480" max="1380" step="30" value="1380" oninput="showtimeVal2(this.value)" onchange="showtimeVal2(this.value)">
+</div>
+<div id="time02" class="timeblock">23:00</div>
+<!--div id="endTime">23:00</div-->
+
+<div class="inner_div">
+<div id="showrange2">Time Range: 8:00am - 11:00pm</div>
 
 <div style="padding-top:30px;">
   <form>
-  <input type="radio" id="r11m" name="room" value="r11m">
-  <label for="r11m">11/F Meeting Room</label><br>
-  <input type="radio" id="r11b" name="room" value="r11b">
-  <label for="r11b">11/F Board Room</label><br>
-  <input type="radio" id="r25i" name="room" value="r25i">
-  <label for="r25i">25/F Interview Room</label><br>
-  <input type="radio" id="r25m" name="room" value="r25m">
-  <label for="r25m">25/F Meeting Room</label><br>
-  <input type="radio" id="r25c" name="room" value="r25c">
-  <label for="r25c">25/F Conference / Training Room</label><br>
-  <input type="radio" id="no_booking" name="room" value="nobook">
-  <label for="nobook">無訂房</label><br>
+  <input type="radio" id="r11m" name="room" style="vertical-align:middle"  value="r11m">
+  <label for="r11m" style="vertical-align:sub">11/F Meeting Room</label><br>
+  <div id="r11b_div" class="r11b_class">
+  <input type="radio" id="r11b" name="room" style="vertical-align:middle"  value="r11b">
+  <label for="r11b" style="vertical-align:sub">11/F Board Room (Note: only administrator can book this room)</label><br>
+  </div>
+  <input type="radio" id="r25i" name="room" style="vertical-align:middle"  value="r25i">
+  <label for="r25i" style="vertical-align:sub">25/F Interview Room</label><br>
+  <input type="radio" id="r25m" name="room" style="vertical-align:middle" value="r25m">
+  <label for="r25m" style="vertical-align:sub">25/F Meeting Room</label><br>
+  <input type="radio" id="r25c" name="room" style="vertical-align:middle" value="r25c">
+  <label for="r25c" style="vertical-align:sub">25/F Conference / Training Room</label><br>
+  <input type="radio" id="no_booking" name="room" style="vertical-align:middle" value="nobook">
+  <label for="nobook" style="vertical-align:sub">無訂房</label><br>
 
 
  </form>
@@ -164,7 +164,7 @@ li { margin-top: 4px; margin-button: 4px; }
 <div style="padding-top:30px;">
 <form>
 <label for="remark_lb">Remark:</label><br>
-<textarea id="remark_area" name="remark_area" rows="4" cols="50"></textarea>
+<textarea id="remark_area" name="remark_area" rows="4" cols="40"></textarea>
 <br>
 </form>
 </div>  
@@ -175,8 +175,15 @@ li { margin-top: 4px; margin-button: 4px; }
         申請房間 
 </button>
 </div>
+
+
+
+
+
 </div>
 
+</div>
+<div style='font-size: x-small;'>version: 20210425-1308</div>
 
 
 
@@ -234,6 +241,26 @@ $("#slider-range").slider({
 });
 
 
+
+function showtimeVal(tmpval) {
+      var hours = ("00" + Math.floor(tmpval / 60)).slice(-2);
+      var mins = ("00" + (tmpval - (hours * 60))).slice(-2);
+
+	$('#time01').html(hours + ':' + mins);
+    $('#showrange2').html('Time Range: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
+
+}
+
+function showtimeVal2(tmpval) {
+      var hours = ("00" + Math.floor(tmpval / 60)).slice(-2);
+      var mins = ("00" + (tmpval - (hours * 60))).slice(-2);
+
+	$('#time02').html(hours + ':' + mins);
+    $('#showrange2').html('Time Range: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
+
+}
+
+
 function show_my_msg() {
   var x = document.getElementById("snackbar");
   x.className = "show";
@@ -248,6 +275,13 @@ function pwFunction() {
         x.type = "password";
       }
  }
+ 
+ 
+function justtest() {
+    var x = document.getElementById("room_full_div");
+		x.style="";
+	alert('Hi');
+} 
 
   
 
