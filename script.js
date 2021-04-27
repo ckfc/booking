@@ -138,7 +138,7 @@ $.ajax({
          }
               
         if (!display_msg_status) {
-            $('#snackbar').text('攪掂....');
+            $('#snackbar').text('Ok....');
             show_my_msg();
             display_msg_status = true;
         }
@@ -151,7 +151,7 @@ $.ajax({
 
 
     },
-    error: function(){alert("失敗！")}
+    error: function(){alert("Fail！")}
   });
 
 
@@ -279,7 +279,7 @@ $.ajax({
          }
               
         if (!display_msg_status) {
-            $('#snackbar').text('攪掂....');
+            $('#snackbar').text('Ok....');
             show_my_msg();
             display_msg_status = true;
         }
@@ -292,7 +292,7 @@ $.ajax({
 
 
     },
-    error: function(){alert("失敗！")}
+    error: function(){alert("Fail！")}
   });
 
 
@@ -305,7 +305,7 @@ $.ajax({
 //----------------------------------
 
   $('#applyroom').click(function() {
-  $('#snackbar').text('收到, 請等等..');
+  $('#snackbar').text('Got it, Please wait..');
   show_my_msg();
 
 
@@ -401,7 +401,7 @@ $.ajax({
          }
 
         if (!display_msg_status) {
-            $('#snackbar').text('攪掂....');
+            $('#snackbar').text('Ok....');
             show_my_msg();
             display_msg_status = true;
         }
@@ -413,7 +413,7 @@ $.ajax({
 
 
     },
-    error: function(){alert("失敗！")}
+    error: function(){alert("Fail！")}
   });
 
 
@@ -423,7 +423,7 @@ $.ajax({
 //----------------------------------
 
   $('#login').click(function() {
-  $('#snackbar').text('收到, 請等等..');
+  $('#snackbar').text('Get it, Please Wait..');
   show_my_msg();
 
 
@@ -477,7 +477,7 @@ $.ajax({
          }
 
         if (!display_msg_status) {
-            $('#snackbar').text('攪掂....');
+            $('#snackbar').text('Ok....');
             show_my_msg();
             display_msg_status = true;
         }
@@ -489,7 +489,7 @@ $.ajax({
 
 
     },
-    error: function(){alert("失敗！")}
+    error: function(){alert("Fail！")}
   });
 
 
