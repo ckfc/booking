@@ -74,11 +74,12 @@ ul.no-bullets {
 	width:100%;
 	
 	border:1px green solid;
-	font-size: 8pt;
+	font-size: 14px;
 }
 
 .inner_div {
  margin:8px 8px 8px 8px;
+ font-size: 14px;
 }
 
 #time1x_container {
