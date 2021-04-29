@@ -456,8 +456,10 @@ $.ajax({
 
           if (b=='usertype')
 			  if (obj[b] == 'admin') {
-				  $(".r11b_class").css("display", "block");
+				  //$(".r11b_class").css("display", "block");
 				  //document.getElementById("d1").style.display = "block";
+					$("#r11b").attr('disabled', false);
+					$("#r11b_lab").css('opacity', '1');
 			  }
 			  else {
 				  $(".r11b_class").css("display", "none");

@@ -108,44 +108,59 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 <div id="room_title_div" style='background-color:#b9c15a; ' class='title_div'>
-  <b>訂房資料輸入</b>
+  <b>預約資料輸入</b>
 </div>
 <div id="apply_room_div" style='background-color:yellow; ' class='content_div'>
 
 
-
-<div id="time1_container" style="margin: auto; padding-top: 20px; padding-bottom: 20px; width:80%">
+<table width="100%" >
+<tbody>
+<tr>
+<td width="15%">開始時間</td>
+<td width="80%">
+<div id="time1_container" style="margin: auto; padding-top: 20px; padding-bottom: 20px; width:95%">
   <input type="range"  id="timevol1" name="timevol1" min="480" max="1380" step="30" value="480" oninput="showtimeVal(this.value)" onchange="showtimeVal(this.value)">
 </div>
 <div id="time01" class="timeblock">08:00</div>
-<!--div id="bgTime">08:00</div-->
-<div id="time2_container" style="margin: auto; padding-top: 20px; padding-bottom: 20px; width:80%">
+</td>
+<td width="5%"></td>
+</tr>
+</tbody>
+</table>
+
+
+
+<table width="100%" >
+<tbody>
+<tr>
+<td width="15%">完結時間</td>
+<td width="80%">
+<div id="time2_container" style="margin: auto; padding-top: 20px; padding-bottom: 20px; width:95%">
   <input type="range"  id="timevol2" name="timevol2" min="480" max="1380" step="30" value="1380" oninput="showtimeVal2(this.value)" onchange="showtimeVal2(this.value)">
 </div>
 <div id="time02" class="timeblock">23:00</div>
-<!--div id="endTime">23:00</div-->
+</td>
+<td width="5%"></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
 
 <div class="inner_div">
-<div id="showrange2">Time Range: 8:00am - 11:00pm</div>
+<div id="showrange2">使用時段: 8:00am - 11:00pm</div>
 
 <div style="padding-top:30px;">
   <form>
   <input type="radio" id="r11m" name="room" style="vertical-align:middle"  value="r11m">
   <label for="r11m" style="vertical-align:sub">11/F Meeting Room</label><br>
-  <div id="r11b_div" class="r11b_class">
-  <input type="radio" id="r11b" name="room" style="vertical-align:middle"  value="r11b">
-  <label for="r11b" style="vertical-align:sub">11/F Board Room (Note: only administrator can book this room)</label><br>
+  <!--div id="r11b_div" class="r11b_class"-->
+  <div id="r11b_div">  
+  <input type="radio" id="r11b" name="room" style="vertical-align:middle" disabled value="r11b">
+  <label id="r11b_lab" for="r11b" style="vertical-align:sub; opacity: 0.5;">11/F Board Room - 如需預約, 請聯絡接待處(行政部)</label><br>
   </div>
   <input type="radio" id="r25i" name="room" style="vertical-align:middle"  value="r25i">
   <label for="r25i" style="vertical-align:sub">25/F Interview Room</label><br>
@@ -163,7 +178,7 @@
 
 <div style="padding-top:30px;">
 <form>
-<label for="remark_lb">Remark:</label><br>
+<label for="remark_lb">備註:(例如:電腦,視像會議,人數)</label><br>
 <textarea id="remark_area" name="remark_area" rows="4" cols="40"></textarea>
 <br>
 </form>
@@ -183,7 +198,7 @@
 </div>
 
 </div>
-<div style='font-size: x-small;'>version: 20210427-1454</div>
+<div style='font-size: x-small;'>version: 20210429-1115</div>
 
 
 
@@ -215,6 +230,7 @@ function formatAMPM(tmptime) {
   return output;
 }
 
+/*
 $("#slider-range").slider({
   range: true,
   min: 480,
@@ -232,14 +248,14 @@ $("#slider-range").slider({
       
 
     //  $('#justtest').html(formatAMPM(02,45));
-      $('#showrange').html('Time Range: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
+      $('#showrange').html('使用時段: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
 
 
 
     });
   }
 });
-
+*/
 
 
 function showtimeVal(tmpval) {
@@ -247,7 +263,7 @@ function showtimeVal(tmpval) {
       var mins = ("00" + (tmpval - (hours * 60))).slice(-2);
 
 	$('#time01').html(hours + ':' + mins);
-    $('#showrange2').html('Time Range: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
+    $('#showrange2').html('使用時段: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
 
 }
 
@@ -256,7 +272,7 @@ function showtimeVal2(tmpval) {
       var mins = ("00" + (tmpval - (hours * 60))).slice(-2);
 
 	$('#time02').html(hours + ':' + mins);
-    $('#showrange2').html('Time Range: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
+    $('#showrange2').html('使用時段: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
 
 }
 
