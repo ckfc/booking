@@ -70,14 +70,14 @@ ul.no-bullets {
 	font-size: 12pt;
 }
 
-.content_div {
+.content_div2 {
 	width:100%;
 	
 	border:1px green solid;
 	font-size: 14px;
 }
 
-.inner_div {
+.inner_div2 {
  margin:8px 8px 8px 8px;
  font-size: 14px;
 }
