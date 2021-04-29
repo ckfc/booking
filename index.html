@@ -15,16 +15,29 @@
     <!--div id="11m"></div-->
 
 
-<div id="user_div" style='background-color:#b9c15a;' class='title_div'>
+<div id="user_div" style='background-color:#248ae5;' class='title_div'>
   <b>使用者資料</b>
 </div>
-<div id="user_info_div" style='background-color:yellow; margin-bottom:4px;' class='content_div'>
+<div id="user_info_div" style='background-color:#9ac2e6; margin-bottom:4px;' class='content_div'>
 <div class="inner_div">
     <span style="width:300px;">UserName:</span> <input type="text" value="" id="userid"><span id="admin" style="width:300px;"></span>   <br><br>
     Password: <input type="password" value="" id="userpw"><br><br>
     <input type="checkbox" name="pw_reverse" onclick="pwFunction()">Show Password
 <div style="margin-top: 5px;"><button id='login' >登入</button></div>	
 </div>
+
+
+
+<div style="font-size: 8px;">測試字體, font-size: 8px;</div>
+<div style="font-size: 9px;">測試字體, font-size: 9px;</div>
+<div style="font-size: 10px;">測試字體, font-size: 10px;</div>
+<div style="font-size: 11px;">測試字體, font-size: 11px;</div>
+<div style="font-size: 12px;">測試字體, font-size: 12px;</div>
+<div style="font-size: 13px;">測試字體, font-size: 13px;</div>
+<div style="font-size: 14px;">測試字體, font-size: 14px;</div>
+<div style="font-size: 15px;">測試字體, font-size: 15px;</div>
+
+
 </div>
 
 
@@ -108,10 +121,10 @@
 
 
 
-<div id="room_title_div" style='background-color:#b9c15a; ' class='title_div'>
+<div id="room_title_div" style='background-color:#248ae5; ' class='title_div'>
   <b>預約資料輸入</b>
 </div>
-<div id="apply_room_div" style='background-color:yellow; ' class='content_div'>
+<div id="apply_room_div" style='background-color:#9ac2e6; ' class='content_div'>
 
 
 <table width="100%" >
@@ -120,9 +133,9 @@
 <td width="15%">開始時間</td>
 <td width="80%">
 <div id="time1_container" style="margin: auto; padding-top: 20px; padding-bottom: 20px; width:95%">
-  <input type="range"  id="timevol1" name="timevol1" min="480" max="1380" step="30" value="480" oninput="showtimeVal(this.value)" onchange="showtimeVal(this.value)">
+  <input type="range"  id="timevol1" name="timevol1" min="540" max="1080" step="30" value="540" oninput="showtimeVal(this.value)" onchange="showtimeVal(this.value)">
 </div>
-<div id="time01" class="timeblock">08:00</div>
+<div id="time01" class="timeblock">09:00</div>
 </td>
 <td width="5%"></td>
 </tr>
@@ -137,9 +150,9 @@
 <td width="15%">完結時間</td>
 <td width="80%">
 <div id="time2_container" style="margin: auto; padding-top: 20px; padding-bottom: 20px; width:95%">
-  <input type="range"  id="timevol2" name="timevol2" min="480" max="1380" step="30" value="1380" oninput="showtimeVal2(this.value)" onchange="showtimeVal2(this.value)">
+  <input type="range"  id="timevol2" name="timevol2" min="540" max="1080" step="30" value="1080" oninput="showtimeVal2(this.value)" onchange="showtimeVal2(this.value)">
 </div>
-<div id="time02" class="timeblock">23:00</div>
+<div id="time02" class="timeblock">18:00</div>
 </td>
 <td width="5%"></td>
 </tr>
@@ -151,13 +164,12 @@
 
 
 <div class="inner_div">
-<div id="showrange2">使用時段: 8:00am - 11:00pm</div>
+<div id="showrange2">使用時段: 9:00am - 6:00pm</div>
 
 <div style="padding-top:30px;">
   <form>
   <input type="radio" id="r11m" name="room" style="vertical-align:middle"  value="r11m">
   <label for="r11m" style="vertical-align:sub">11/F Meeting Room</label><br>
-  <!--div id="r11b_div" class="r11b_class"-->
   <div id="r11b_div">  
   <input type="radio" id="r11b" name="room" style="vertical-align:middle" disabled value="r11b">
   <label id="r11b_lab" for="r11b" style="vertical-align:sub; opacity: 0.5;">11/F Board Room - 如需預約, 請聯絡接待處(行政部)</label><br>
@@ -168,9 +180,6 @@
   <label for="r25m" style="vertical-align:sub">25/F Meeting Room</label><br>
   <input type="radio" id="r25c" name="room" style="vertical-align:middle" value="r25c">
   <label for="r25c" style="vertical-align:sub">25/F Conference / Training Room</label><br>
-  <!--input type="radio" id="no_booking" name="room" style="vertical-align:middle" value="nobook">
-  <label for="nobook" style="vertical-align:sub">無訂房</label><br-->
-
 
  </form>
 </div>  
@@ -216,46 +225,11 @@ function formatAMPM(tmptime) {
     var tmp_hr = +tmpt_array[0]-12;
   else
     var tmp_hr = +tmpt_array[0];
-  /*
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0'+minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + ampm;
-  return strTime;
-  */
+
   output = tmp_hr + ':' + tmpt_array[1] + ampm;
   return output;
 }
 
-/*
-$("#slider-range").slider({
-  range: true,
-  min: 480,
-  max: 1380,
-  step: 30,
-  values: [480, 1380],
-  slide: function(e, ui) {
-    $('.slider-time').each(function(i) {
-      var hours = ("00" + Math.floor(ui.values[i] / 60)).slice(-2);
-      var mins = ("00" + (ui.values[i] - (hours * 60))).slice(-2);
-      $(this).html(hours + ':' + mins);
-
-      //tmpt_array01 =
-      
-      
-
-    //  $('#justtest').html(formatAMPM(02,45));
-      $('#showrange').html('使用時段: ' + formatAMPM($('#time01').html()) + ' - ' + formatAMPM($('#time02').html()));
-
-
-
-    });
-  }
-});
-*/
 
 
 function showtimeVal(tmpval) {
